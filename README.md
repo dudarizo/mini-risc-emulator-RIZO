@@ -37,28 +37,38 @@ The system emulates:
 Make sure you are in the project root directory.
 
 ### Compile the Emulator
+
 ```bash
 cd emulator
 make
 ```
 
 ### Compile the Test Program (Hello World)
+
+```bash
 cd ../embedded_software
 make
+```
 
 This generates the file build/esw.bin.
 
 ### Run the Emulator
+
+```bash
 cd ../emulator
 ./build/emulator ../embedded_software/build/esw.bin
+```
 
-## Expected Output
+### Expected Output
+
+```bash
 Loaded 83 bytes from ../embedded_software/build/esw.bin into memory.
 Starting emulation...
 Hello, World!
 What's up?
 EBREAK executed. Halting.
 Emulation finished.
+```
 
 ### Cleaning
 
