@@ -1,65 +1,112 @@
 # Mini-RISC Emulator Project
 
-⚠️ **Important notice**  
-The Mini-RISC toolchain (`gcc_MINIRISC`) is **not included** in this repository due to GitHub file upload limits.  
-It must be installed separately or provided by the course.
+⚠️ **Important note**
+
+The Mini-RISC toolchain (`gcc_MINIRISC`) is **not included** in this repository due to GitHub file size limits.  
+It must be installed separately or provided by the course instructors.
+
+---
 
 ## Project Overview
 
-This project consists of a software emulator for the **Mini-RISC** architecture (inspired by RISC-V) and a set of Assembly test programs.  
-The emulator models a simplified computer system including a CPU, memory, and memory-mapped input/output.
+This project consists of a **software emulator** for a simplified RISC-V–like architecture called **Mini-RISC**, developed as part of a Computer Architecture course.
 
-## What does the project do?
+The goal is to understand the internal functioning of a processor by implementing a complete software emulator, covering:
+- instruction execution,
+- memory management,
+- and memory-mapped I/O.
 
-The system emulates:
-1. **Mini-RISC CPU**  
-   Executes instructions such as `addi`, `beq`, `jal`, `sb`, `lbu`, etc.  
-   Instruction opcodes are customized for this specific Mini-RISC architecture.
-2. **RAM Memory**  
-   32 MiB of memory for code and data, starting at address `0x80000000`.
-3. **Output Peripheral (CharOut)**  
-   Memory-mapped at address `0x10000000`, allowing characters and numbers to be printed to the terminal.
+---
+
+## What Does the Project Do?
+
+The system emulates a complete computer composed of:
+
+1. **Mini-RISC CPU**
+   - Implements a Fetch / Decode / Execute cycle.
+   - Supports a minimal subset of RISC-V–like instructions:
+     `LUI`, `AUIPC`, `JAL`, `JALR`, `BEQ`, `ADDI`, `LBU`, `SB`, and `EBREAK`.
+   - Instruction opcodes are **customized** for this Mini-RISC architecture.
+
+2. **RAM Memory**
+   - 32 MiB of RAM.
+   - Base address: `0x80000000`.
+
+3. **Output Peripheral (CharOut)**
+   - Memory-mapped at address `0x10000000`.
+   - Writing bytes or words to this address prints output to the terminal.
+
+---
 
 ## Execution Flow
 
-1. The emulator loads a binary file (`.bin`) into memory.
-2. The CPU performs the Fetch / Decode / Execute cycle.
-3. Execution stops when the `ebreak` instruction is encountered.
+1. The emulator loads a raw binary file (`.bin`) into RAM.
+2. The CPU repeatedly performs:
+   - Fetch instruction from memory,
+   - Decode instruction fields,
+   - Execute the instruction.
+3. Execution stops when the `EBREAK` instruction is encountered.
 
-## File Structure
+---
 
-- `emulator/` — Emulator source code written in C (`main.c`, `minirisc.c`, `platform.c`, headers and Makefile).
-- `embedded_software/` — Assembly test program (`hello.s`) and Makefile for cross-compilation.
-- `gcc_MINIRISC/` — Custom Mini-RISC toolchain (**not included** in this repository).
+## Repository Structure
+
+├── emulator/
+│ ├── main.c # Program entry point
+│ ├── minirisc.c/h # CPU implementation
+│ ├── platform.c/h # Memory + I/O platform
+│ └── Makefile # Builds the emulator
+│
+├── embedded_software/
+│ ├── hello.s # Assembly test program
+│ └── Makefile # Cross-compilation Makefile
+│
+└── README.md
+
+
+---
 
 ## How to Compile and Run
 
-Make sure you are in the project root directory.
+### Prerequisites
+- GCC installed on the host machine.
+- Mini-RISC toolchain (`gcc_MINIRISC`) installed locally or provided by the course.
 
-### Compile the Emulator
+---
+
+### 1. Compile the Emulator (Host)
 
 ```bash
 cd emulator
 make
 ```
 
-### Compile the Test Program (Hello World)
+This generates the executable:
 
+```bash
+build/emulator
+```
+
+### 2. Compile the Test Program (Hello World)
 ```bash
 cd ../embedded_software
 make
 ```
 
-This generates the file build/esw.bin.
+This produces:
 
-### Run the Emulator
+```bash
+build/esw.bin
+```
+
+### 3. Run the Emulator
 
 ```bash
 cd ../emulator
 ./build/emulator ../embedded_software/build/esw.bin
 ```
 
-### Expected Output
+Expected Output
 
 ```bash
 Loaded 83 bytes from ../embedded_software/build/esw.bin into memory.
@@ -70,7 +117,9 @@ EBREAK executed. Halting.
 Emulation finished.
 ```
 
-### Cleaning
+### Cleaning the Project
 
+```bash
 cd emulator && make clean
 cd ../embedded_software && make clean
+``` 
