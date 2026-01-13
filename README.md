@@ -2,7 +2,7 @@
 
 > ⚠️ **Important notice**  
 > The Mini-RISC toolchain (`gcc_MINIRISC`) is **not included** in this repository due to GitHub file upload limits.  
-> It must be installed separately or provided as part of the course material.
+> It must be installed separately.
 
 ---
 
