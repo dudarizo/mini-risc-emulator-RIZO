@@ -3,7 +3,7 @@
 ⚠️ **Important note**
 
 The Mini-RISC toolchain (`gcc_MINIRISC`) is **not included** in this repository due to GitHub file size limits.  
-It must be installed separately or provided by the course instructors.
+It must be installed separately. 
 
 ---
 
@@ -51,20 +51,21 @@ The system emulates a complete computer composed of:
 
 ## Repository Structure
 
+```text
+.
+├── README.md
 ├── emulator/
-│ ├── main.c # Program entry point
-│ ├── minirisc.c/h # CPU implementation
-│ ├── platform.c/h # Memory + I/O platform
-│ └── Makefile # Builds the emulator
+│   ├── main.c          # Program entry point
+│   ├── minirisc.c      # CPU implementation
+│   ├── minirisc.h
+│   ├── platform.c      # Memory and I/O platform
+│   ├── platform.h
+│   └── Makefile        # Builds the emulator
 │
-├── embedded_software/
-│ ├── hello.s # Assembly test program
-│ └── Makefile # Cross-compilation Makefile
-│
-└── README.md
-
-
----
+└── embedded_software/
+    ├── hello.s         # Assembly test program
+    └── Makefile        # Cross-compilation Makefile
+```
 
 ## How to Compile and Run
 
